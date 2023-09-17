@@ -3,7 +3,7 @@
 import Peer from "peerjs"
 import { useEffect, useState } from "react"
 
-export default function page() {
+export default function Page() {
     const [myPeerId, setMyPeerId] = useState('');
     const [peer, setPeer] = useState<Peer | null>(null);
     const [remotePeerId, setRemotePeerId] = useState('');
