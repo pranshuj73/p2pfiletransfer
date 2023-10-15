@@ -2,6 +2,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+// @ts-ignore
+import browserEnv from 'browser-env';
+
+browserEnv(['navigator'])
 
 const inter = Inter({ subsets: ['latin'] })
 
