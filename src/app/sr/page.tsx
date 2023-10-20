@@ -9,7 +9,6 @@ export default function Page() {
     const [remotePeerId, setRemotePeerId] = useState('');
     const [connectedid, setConnectedid] = useState(false);
     const digits=generateRandom5DigitNumber().toString();
-    const remotepeer = new Peer();
     const [connectingPeerId, setConnectingPeerId] = useState('');
     const [receivedFileURL, setReceivedFileURL] = useState('');
     const [filename, setfilename] = useState('');
@@ -79,6 +78,7 @@ export default function Page() {
     };
    
         const connectToRemotePeer = () => {
+            const remotepeer = new Peer();
             
             const connection = remotepeer.connect(remotePeerId);
             connection.on('open', () => {
