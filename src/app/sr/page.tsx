@@ -9,7 +9,7 @@ export default function Page() {
     const [remotePeerId, setRemotePeerId] = useState('');
     const [connectedid, setConnectedid] = useState(false);
     const digits=generateRandom5DigitNumber().toString();
-    const remotepeer = new Peer(digits);
+    const remotepeer = new Peer();
     const [connectingPeerId, setConnectingPeerId] = useState('');
     const [receivedFileURL, setReceivedFileURL] = useState('');
     const [filename, setfilename] = useState('');
@@ -48,11 +48,12 @@ export default function Page() {
     }, [peer]);
 
     const connect = () => {
-        const digit=generateRandom5DigitNumber().toString();
-        const newPeer = new Peer(digit);
+        // const digit=generateRandom5DigitNumber().toString();
+        const newPeer = new Peer(digits);
 
         newPeer.on('open', (id) => {
             setMyPeerId(id);
+            setdisconnected(false);
         });
         setPeer(newPeer);
     }
@@ -70,21 +71,24 @@ export default function Page() {
             setPeer(null);
             setMyPeerId('');
             setdisconnected(true);
+            setConnectedid(false);
+            setConnectingPeerId('');
+            setRemotePeerId('');
             
         }
     };
-
-    const connectToRemotePeer = () => {
-        const connection = remotepeer.connect(remotePeerId);
-        connection.on('open', () => {
-            alert('Connected to remote peer');
-            setConnectedid(true);
-            const messages = `incoming connection from ${myPeerId}`
-            connection.send({ messagess: messages, id: myPeerId });
-        });
-    };
-
-    const sendFile = async (file: File) => {
+   
+        const connectToRemotePeer = () => {
+            
+            const connection = remotepeer.connect(remotePeerId);
+            connection.on('open', () => {
+                alert('Connected to remote peer');
+                setConnectedid(true);
+                const messages = `incoming connection from ${myPeerId}`
+                connection.send({ messagess: messages, id: myPeerId });
+            });
+        };
+        const sendFile = async (file: File) => {
         const connection = remotepeer.connect(remotePeerId);
         connection.on('open', () => {
             const filetype = file.name;
